@@ -1,0 +1,25 @@
+{
+  "name": "chai-assert-change",
+  "version": "1.0.0",
+  "description": "an assertion against a change to a value",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amireh/chai-assert-change.git"
+  },
+  "keywords": [
+    "chai",
+    "assertion",
+    "assert",
+    "test"
+  ],
+  "author": "Ahmad Amireh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/amireh/chai-assert-change/issues"
+  },
+  "homepage": "https://github.com/amireh/chai-assert-change#readme"
+}
