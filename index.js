@@ -68,19 +68,32 @@ function assertMultiChange(context) {
   context.in.forEach((spec, index) => {
     const oldValue = oldValues[index]
     const newValue = newValues[index]
+    const trace = message => {
+      if (spec.message) {
+        return `${message} (${spec.message})`
+      }
+      else {
+        return message
+      }
+    }
 
     if (hasOwnProperty(spec, 'from') && hasOwnProperty(spec, 'to')) {
       assert.deepEqual(oldValue, spec.from,
-        `Expected value to have been ${spec.from} but was ${oldValue}`)
+        trace(`Expected value to have been ${spec.from} but was ${oldValue}`)
+      )
 
       assert.deepEqual(newValue, spec.to,
-        `Expected value to become ${spec.to} but instead became ${newValue}`)
+        trace(`Expected value to become ${spec.to} but instead became ${newValue}`)
+      )
     } else if (hasOwnProperty(spec, 'by')) {
       assert.equal(oldValue + spec.by, newValue,
-        `Expected value to change from ${oldValue} to ${oldValue + spec.by} but it now is ${newValue}`
+        trace(
+          `Expected value to change from ${oldValue} to ` +
+          `${oldValue + spec.by} but it now is ${newValue}`
+        )
       )
     } else {
-      assert.notEqual(oldValue, newValue)
+      assert.notEqual(oldValue, newValue, spec.message)
     }
   })
 }
