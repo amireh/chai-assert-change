@@ -1,5 +1,5 @@
 const { assert } = require('chai');
-const assertChange = require('./index');
+const { assertChange, assertBecameTrue, assertBecameFalse } = require('./index');
 
 describe('quantifiers', function() {
   describe('[by]', function() {
@@ -238,5 +238,65 @@ describe('API invariants', function() {
         assertChange(variant)
       }, 'Assertion is missing or malformed!')
     })
+  })
+})
+
+describe('assertBecameTrue', function() {
+  it('asserts false then true', function() {
+    let x = 0
+    assertBecameTrue({
+      fn: () => x++,
+      of: () => x > 0,
+    })
+  })
+
+  it('expects the first evaluation to be false', function() {
+    let x = 0
+    assert.throws(() => {
+      assertBecameTrue({
+        fn: () => x++,
+        of: () => x === 0,
+      })
+    }, 'Expected value to have been false but was true')
+  })
+
+  it('expects the second evaluation to be true', function() {
+    let x = 0
+    assert.throws(() => {
+      assertBecameTrue({
+        fn: () => x,
+        of: () => x > 0,
+      })
+    }, 'Expected value to become true but instead became false')
+  })
+})
+
+describe('assertBecameFalse', function() {
+  it('asserts true then false', function() {
+    let x = 0
+    assertBecameFalse({
+      fn: () => x++,
+      of: () => x === 0,
+    })
+  })
+
+  it('expects the first evaluation to be true', function() {
+    let x = 0
+    assert.throws(() => {
+      assertBecameFalse({
+        fn: () => x++,
+        of: () => x > 0,
+      })
+    }, 'Expected value to have been true but was false')
+  })
+
+  it('expects the second evaluation to be false', function() {
+    let x = 0
+    assert.throws(() => {
+      assertBecameFalse({
+        fn: () => x,
+        of: () => x === 0,
+      })
+    }, 'Expected value to become false but instead became true')
   })
 })
