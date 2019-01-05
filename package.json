@@ -1,6 +1,6 @@
 {
   "name": "chai-assert-change",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "an assertion against a change to a value",
   "main": "index.js",
   "scripts": {

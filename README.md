@@ -14,7 +14,7 @@ You do need `chai` to be installed.
 ```javascript
 function assertChange({
   // The function that applies the side-effect.
-  // 
+  //
   // If this yields a Promise, we'll run the queries only once it resolves.
   // We'll also propagate it back for you so that you can feed it to mocha
   // or whatever else.
@@ -32,26 +32,26 @@ function assertChange({
   // You can use only one of these for each side-effect you're testing.
 
   // [1] [by]
-  // 
+  //
   // Test a change in a numerical value, like "X changes by 2" or
   // "X changes by 0" as in it does not change.
   ?by: Number,
 
   // [2] [from, to]
-  // 
+  //
   // Test non-numerical values for inequality; arrays, objects, or numbers
   // too when a delta doesn't make sense.
-  // 
+  //
   // It is implemented using:
-  // 
+  //
   //     chai.assert.deepEqual(a, b)
-  // 
+  //
   // To use this you need to fill in both "from" and "to".
   ?from: Any,
   ?to: Any,
 
   // [3] [custom]
-  // 
+  //
   // A custom test; you are passed the values before and after applying
   // the side-effect function and it's up to you to do the assertions.
   ?using: function(initialValue: Any, nextValue: Any): void
@@ -140,6 +140,32 @@ assertChange({
     assert.notInclude(a, { foo: '1' })
     assert.include(b, { foo: '1' })
   }
+})
+```
+
+## Other helpers
+
+We offer a few extensions to assertChange that can make your tests a bit less verbose in some cases.
+
+### `assertBecameTrue`
+Asserts that your function causes the result to go from `false` to `true`
+
+```javascript
+let x = 0
+assertBecameTrue({
+  fn: () => x++,
+  of: () => x > 0,
+})
+```
+
+### `assertBecameFalse`
+Asserts that your function causes the result to go from `true` to `false`
+
+```javascript
+let x = 0
+assertBecameFalse({
+  fn: () => x++,
+  of: () => x === 0,
 })
 ```
 
